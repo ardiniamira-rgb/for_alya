@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farewell Alya</title>
+    <style>
+        /* ===== CSS VARIABLES - CUSTOMIZE COLORS HERE ===== */
+        :root {
+            --gradient-start: #a8d8ea;
+            --gradient-end: #ffb6d9;
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Trebuchet MS', Tahoma, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ===== GROUND FLOWERS - SCATTERED ACROSS BOTTOM ===== */
+        .ground-flowers {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 180px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .small-flower {
+            position: absolute;
+            bottom: 0;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        @keyframes sway {
+            0%, 100% { 
+                transform: rotate(-3deg) translateX(-2px);
+            }
+            50% { 
+                transform: rotate(3deg) translateX(2px);
+            }
+        }
+
+        .small-flower:nth-child(2n) { animation-delay: 0.5s; animation-duration: 3.5s; }
+        .small-flower:nth-child(3n) { animation-delay: 1s; animation-duration: 2.8s; }
+        .small-flower:nth-child(4n) { animation-delay: 1.5s; animation-duration: 3.2s; }
+        .small-flower:nth-child(5n) { animation-delay: 0.3s; animation-duration: 2.5s; }
+
+        /* ===== GREETING CARD OVERLAY ===== */
+        .card-overlay {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            width: 90%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 20px 60px var(--shadow-color);
+            text-align: center;
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ===== PHOTO SECTION ===== */
+        .photo-wrapper {
+            margin: 0 auto 32px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+            animation: photoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes photoPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* ===== TEXT CONTENT - REPLACE MESSAGE HERE ===== */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .wishes {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        /* ===== BLOOM BUTTON ===== */
+        .bloom-btn {
+            margin-top: 32px;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: buttonBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes buttonBounce {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .bloom-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            animation: none;
+        }
+
+        .bloom-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 640px) {
+            .card-overlay {
+                padding: 32px 24px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .wishes {
+                font-size: 0.95rem;
+            }
+
+            .ground-flowers {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== GROUND FLOWERS - SCATTERED DECORATION ===== -->
+    <div class="ground-flowers" id="groundFlowers"></div>
+
+    <!-- ===== GREETING CARD WITH MESSAGE ===== -->
+    <div class="card-overlay">
+        <!-- ===== PHOTO SECTION - REPLACE IMAGE SRC BELOW ===== -->
+        <div class="photo-wrapper">
+            <!-- REPLACE THIS: Add your intern friend's photo -->
+            <img src="images/alya.jpg" alt="Alya's photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="photo-placeholder">Photo Here</div>
+        </div>
+
+        <!-- ===== FAREWELL MESSAGE - CUSTOMIZE TEXT BELOW ===== -->
+        <h1>Byebye Alya 🥹🫶🏻</h1>
+        
+        <p class="wishes">
+            To the most cheerful person i've ever met. Jaga diri, stay pretty, stay cute as always. 
+			Don't overthink too much whatever people say okay. Dont let the others pijak u cause you're too kind 🥺
+			If anytime free we roger roger hang out together tau. nah number : 0162933432 😝
+			
+        </p>
+        
+        <p class="wishes">
+            Jangan lupa kitorang!
+        </p>
+        
+        <p class="wishes">
+            Flyhigh Alya 🤍
+        </p>
+
+        <button class="bloom-btn" id="bloomBtn">
+            🌹 TEKAN SINI
+        </button>
+    </div>
+
+    <script>
+        // ===== CREATE GROUND FLOWERS =====
+        const groundFlowersContainer = document.getElementById('groundFlowers');
+        const flowerCount = 60;
+
+        for (let i = 0; i < flowerCount; i++) {
+            const flower = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            flower.setAttribute('class', 'small-flower');
+            flower.setAttribute('width', '30');
+            flower.setAttribute('height', '50');
+            flower.setAttribute('viewBox', '0 0 30 50');
+            flower.style.left = `${Math.random() * 100}%`;
+            
+            const stemHeight = 20 + Math.random() * 15;
+            const petalSize = 4 + Math.random() * 2;
+            const colorChoice = Math.random();
+            let petalColor;
+            
+            if (colorChoice < 0.33) {
+                petalColor = '#b8d8ea';
+            } else if (colorChoice < 0.66) {
+                petalColor = '#ffb6d9';
+            } else {
+                petalColor = '#d4b8ea';
+            }
+
+            flower.innerHTML = `
+                <line x1="15" y1="50" x2="15" y2="${50 - stemHeight}" stroke="#7fb069" stroke-width="2"/>
+                <circle cx="15" cy="${50 - stemHeight}" r="${petalSize}" fill="${petalColor}" opacity="0.9"/>
+                <circle cx="${15 - petalSize * 0.7}" cy="${50 - stemHeight}" r="${petalSize * 0.8}" fill="${petalColor}" opacity="0.85"/>
+                <circle cx="${15 + petalSize * 0.7}" cy="${50 - stemHeight}" r="${petalSize * 0.8}" fill="${petalColor}" opacity="0.85"/>
+                <circle cx="15" cy="${50 - stemHeight - petalSize * 0.7}" r="${petalSize * 0.8}" fill="${petalColor}" opacity="0.85"/>
+                <circle cx="15" cy="${50 - stemHeight + petalSize * 0.7}" r="${petalSize * 0.8}" fill="${petalColor}" opacity="0.85"/>
+                <circle cx="15" cy="${50 - stemHeight}" r="${petalSize * 0.5}" fill="#ffe680" opacity="0.9"/>
+            `;
+            
+            groundFlowersContainer.appendChild(flower);
+        }
+
+        // ===== BUTTON NAVIGATION TO FLOWER.HTML =====
+        const bloomBtn = document.getElementById('bloomBtn');
+
+        bloomBtn.addEventListener('click', function() {
+            // Navigate to flower.html
+            window.location.href = 'flower.html';
+        });
+    </script>
+</body>
+</html>

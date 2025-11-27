@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNTUK ALYA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ===== GOLD CONFETTI OVERLAY ===== */
+        .sparkle-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            animation: confettiFall 4s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { 
+                opacity: 1; 
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* ===== FLOWER STEMS (4 STICKS) ===== */
+        .flower-stem-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .flower-stem {
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+            height: 0;
+            animation: growStem 4s ease-out forwards;
+        }
+
+        .stem-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(255, 20, 147, 0.8) 0%, 
+                rgba(255, 105, 180, 0.9) 50%, 
+                rgba(199, 21, 133, 1) 100%);
+            border-radius: 4px;
+            box-shadow: 0 0 15px #ff1493;
+            animation: stemGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes stemGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px #ff1493;
+            }
+            50% {
+                box-shadow: 0 0 25px #ff1493, 0 0 35px #ff69b4;
+            }
+        }
+
+        .flower-bloom {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            transform: translate(-50%, -50%) scale(0);
+            animation: bloomFlower 2s ease-out 4s forwards;
+        }
+
+        .petal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #c71585 100%);
+            border-radius: 50% 50% 50% 0;
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+            transform-origin: center bottom;
+            animation: petalSway 3s ease-in-out infinite;
+        }
+
+        @keyframes petalSway {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(-15px);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(calc(var(--rotation) + 5deg)) translateY(-15px) scale(1.05);
+            }
+        }
+
+        .petal:nth-child(1) { 
+            --rotation: 0deg;
+            animation-delay: 0s;
+        }
+        .petal:nth-child(2) { 
+            --rotation: 72deg;
+            animation-delay: 0.2s;
+        }
+        .petal:nth-child(3) { 
+            --rotation: 144deg;
+            animation-delay: 0.4s;
+        }
+        .petal:nth-child(4) { 
+            --rotation: 216deg;
+            animation-delay: 0.6s;
+        }
+        .petal:nth-child(5) { 
+            --rotation: 288deg;
+            animation-delay: 0.8s;
+        }
+
+        .flower-center {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -45%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px #FFD700;
+            z-index: 10;
+        }
+
+        .leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-radius: 0 50% 50% 0;
+            opacity: 0;
+            animation: leafGrow 1s ease-out forwards;
+            box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+        }
+
+        .leaf.left {
+            left: -20px;
+            top: 40%;
+            transform: rotate(-45deg);
+            animation-delay: 3s;
+        }
+
+        .leaf.right {
+            right: -20px;
+            top: 60%;
+            transform: rotate(135deg) scaleX(-1);
+            animation-delay: 3.5s;
+        }
+
+        @keyframes leafGrow {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-45deg);
+            }
+            100% {
+                opacity: 0.9;
+                transform: scale(1) rotate(-45deg);
+            }
+        }
+
+        .flower-stem.left-1 {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .flower-stem.left-2 {
+            left: 20%;
+            animation-delay: 0.5s;
+        }
+
+        .flower-stem.left-3 {
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .flower-stem.right-1 {
+            right: 30%;
+            animation-delay: 1.5s;
+        }
+
+        .flower-stem.right-2 {
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .flower-stem.right-3 {
+            right: 10%;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes growStem {
+            0% {
+                height: 0;
+                opacity: 0;
+            }
+            100% {
+                height: 75vh;
+                opacity: 1;
+            }
+        }
+
+        @keyframes bloomFlower {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* ===== CENTER CONTENT CONTAINER ===== */
+        .center-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* ===== WISHES CARD (BEHIND PHOTO) ===== */
+        .wishes-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4);
+            opacity: 0;
+            animation: cardAppear 1.5s ease-out 3s forwards;
+            position: relative;
+            z-index: 49;
+            margin-top: 0;
+        }
+
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .wishes-card h2 {
+            color: #ff1493;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .wishes-card p {
+            color: #2d3436;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        /* ===== PHOTO FRAME (IN FRONT OF CARD) ===== */
+        .photo-container {
+            position: relative;
+            transform: scale(0);
+            z-index: 51;
+            opacity: 0;
+            animation: photoAppear 2s cubic-bezier(0.34, 1.56, 0.64, 1) 4s forwards;
+        }
+
+        @keyframes photoAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            60% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .photo-frame {
+            width: 450px;
+            height: 300px;
+            border-radius: 20px;
+            border: 8px solid white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 40px rgba(255, 215, 0, 0.5);
+            overflow: hidden;
+            background: white;
+            animation: photoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes photoGlow {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                            0 0 40px rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6),
+                            0 0 60px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: white;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fd79a8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .photo-frame {
+                width: 300px;
+                height: 200px;
+            }
+
+            .wishes-card {
+                padding: 70px 30px 30px 30px;
+                max-width: 90%;
+            }
+
+            .wishes-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .wishes-card p {
+                font-size: 0.95rem;
+            }
+
+            .flower-stem {
+                width: 80px;
+            }
+
+            .stem-line {
+                width: 6px;
+            }
+
+            .flower-bloom {
+                top: -25px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .petal {
+                width: 20px;
+                height: 35px;
+            }
+
+            .leaf {
+                width: 30px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== GOLD CONFETTI OVERLAY ===== -->
+    <div class="sparkle-overlay" id="sparkleOverlay"></div>
+
+    <!-- ===== FLOWER STEMS (4 STICKS) ===== -->
+    <div class="flower-stem-container">
+        <div class="flower-stem left-1">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+        <div class="flower-stem left-2">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+        <div class="flower-stem left-3">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+        <div class="flower-stem right-1">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+        <div class="flower-stem right-2">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+        <div class="flower-stem right-3">
+            <div class="stem-line"></div>
+            <div class="leaves">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="flower-bloom">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="flower-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CENTER CONTENT ===== -->
+    <div class="center-content">
+        <!-- WISHES CARD (BEHIND) -->
+        <div class="wishes-card">
+            <h2>✨ Hi Alya ✨</h2>
+            <p>
+                Thankyou damn much even baru kenal berapa hari je dini dah selesa dengan alya, peramah sangatt.
+				Also always help me whenever i need ur help.Taktahu nak thankyou macam mana tapi dini appreciate sangat sangat tau.
+				SAYANG YOU MUAH 💋
+
+            </p>
+        </div>
+
+        <!-- PHOTO (IN FRONT) -->
+        <div class="photo-container">
+            <div class="photo-frame">
+                <!-- REPLACE 'intern.jpg' WITH YOUR ACTUAL IMAGE FILENAME -->
+                <img src="images/intern.jpg" alt="Intern" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder">Your Photo Here 🌸</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CREATE GOLD CONFETTI =====
+        const sparkleOverlay = document.getElementById('sparkleOverlay');
+        for (let i = 0; i < 100; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `-${Math.random() * 20}px`;
+            sparkle.style.animationDelay = `${Math.random() * 5}s`;
+            sparkle.style.animationDuration = `${3 + Math.random() * 3}s`;
+            
+            // Vary confetti shapes
+            if (Math.random() > 0.5) {
+                sparkle.style.borderRadius = '0';
+                sparkle.style.transform = 'rotate(45deg)';
+            }
+            
+            sparkleOverlay.appendChild(sparkle);
+        }
+    </script>
+</body>
+</html>
